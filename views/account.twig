@@ -3,6 +3,12 @@
     <title>{{ account }}</title>
   </head>
   <body>
-    {{ account }}
+    <h1>{{ account }}</h1>
+    <br>
+    <p>
+      {% for hero in profile.heroes %}
+        {{ hero.name }} [{{ hero.level }}]<br>
+      {% endfor %}
+    </p>
   </body>
 </html>
