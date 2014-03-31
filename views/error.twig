@@ -1,12 +1,9 @@
-<html>
-  <head>
-    <title>Error</title>
-  </head>
-  <body>
+{% extends "page.twig" %}
+
+{% block title %}Error{% endblock %}
+{% block content %}
     <h1>{{ error }}</h1>
-    <br>
     <p>
       {{ description }}
     </p>
-  </body>
-</html>
+{% endblock %}
