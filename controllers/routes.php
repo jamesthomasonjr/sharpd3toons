@@ -8,11 +8,12 @@ class RouteController
   protected $twig;
   protected $guzzle;
 
-  public function __construct(Request $request,Twig_Environment $twig, Client $guzzle)
+  public function __construct(Request $request, Twig_Environment $twig, Client $guzzle)
   {
     $this->request = $request;
     $this->twig = $twig;
     $this->guzzle = $guzzle;
+    $this->sendFile = $sendFile;
   }
 
   public function index()
@@ -109,6 +110,13 @@ class RouteController
       'error' => 'Invalid Hero',
       'description' => 'The provided hero does not exist.'
     ));
+  }
+
+  public function asset(Application $app, $asset)
+  {
+    return (file_exists('/assets/'.$asset))
+    ? $app->sendFile('/assets/'.$asset)
+    : handleError(NULL, 404) ;
   }
 
   public function handleError(\Exception $e, $code)

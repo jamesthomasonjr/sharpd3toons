@@ -26,6 +26,8 @@ $app->get('/{account}/', 'routes.controller:account')
 $app->get('/{account}/{hero}/', 'routes.controller:hero')
 	->assert('account', '\w{3,12}-\d{4}')
 	->assert('hero', '\d{1,9}');
+$app->get('/assets/{asset}', 'routes.controller:asset')
+	->assert('asset', '.(css|js)\z');
 
 $app->error('routes.controller:handleError');
 
