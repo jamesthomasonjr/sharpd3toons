@@ -22,6 +22,7 @@ $app['routes.controller'] = $app->share(function() use ($app) {
 
 $app->get('/', 'routes.controller:index');
 $app->get('/{account}/', 'routes.controller:account');
+$app->get('/{account}/{hero}/', 'routes.controller:hero');
 
 $app->run();
 

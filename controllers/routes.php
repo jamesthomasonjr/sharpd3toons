@@ -6,19 +6,19 @@ class RouteController
 {
   protected $request;
   protected $twig;
-  protected $client;
+  protected $guzzle;
 
-  public function __construct(Request $request,Twig_Environment $twig, Client $client)
+  public function __construct(Request $request,Twig_Environment $twig, Client $guzzle)
   {
     $this->request = $request;
     $this->twig = $twig;
-    $this->client = $client;
+    $this->guzzle = $guzzle;
   }
 
   public function index()
   {
-    // Show my accout by default
-    return $this->account('sharp-1324');
+    // Render the main page
+    return $this->twig->render('main.twig');
   }
 
   public function account($account)
@@ -33,6 +33,18 @@ class RouteController
     : $this->displayInvalidAccount() ;
   }
 
+  public function hero($account, $hero)
+  {
+    // Grab hero data
+    $information = $this->grabHeroInformation($account, $hero);
+
+    // If hero exists, show hero page
+    // Otherwise, show an error page
+    return ($this->validateHero($information))
+    ? $this->displayHero($information)
+    : $this->displayInvalidHero() ;
+  }
+
   public function validateAccount($information)
   {
     // If the result doesn't have a "battleTag" value then
@@ -40,10 +52,24 @@ class RouteController
     return (array_key_exists('battleTag', $information->json()));
   }
 
+  public function validateHero($information)
+  {
+    // If the result doesn't have an "id" value then
+    // the hero does not exist.
+    return (array_key_exists('id', $information->json()));
+  }
+
   public function grabAccountInformation($account)
   {
     // Grab Account profile
-    $response = $this->client->get('http://us.battle.net/api/d3/profile/'.$account.'/');
+    $response = $this->guzzle->get('http://us.battle.net/api/d3/profile/'.$account.'/');
+    return $response;
+  }
+
+  public function grabHeroInformation($account, $hero)
+  {
+    // Grab hero profile
+    $response = $this->guzzle->get('http://us.battle.net/api/d3/profile/'.$account.'/hero/'.$hero);
     return $response;
   }
 
@@ -57,12 +83,31 @@ class RouteController
     ));
   }
 
+  public function displayHero($information)
+  {
+    $profile = $information->json();
+
+    // Render the hero information page
+    return $this->twig->render('hero.twig', array(
+      'profile' => $profile
+    ));
+  }
+
   public function displayInvalidAccount()
   {
     // Render an error page
     return $this->twig->render('error.twig', array(
       'error' => 'Invalid Account',
-      'description' => "The provided account does not exist."
+      'description' => 'The provided account does not exist.'
+    ));
+  }
+
+  public function displayInvalidHero()
+  {
+    // Render an error page
+    return $this->twig->render('error.twig', array(
+      'error' => 'Invalid Hero',
+      'description' => 'The provided hero does not exist.'
     ));
   }
 }

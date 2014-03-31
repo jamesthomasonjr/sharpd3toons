@@ -7,7 +7,7 @@
     <br>
     <p>
       {% for hero in profile.heroes %}
-        {{ hero.name }} [{{ hero.level }}]<br>
+        <a href="{{ hero.id }}">{{ hero.name }}</a> [{{ hero.level }}]<br>
       {% endfor %}
     </p>
   </body>
