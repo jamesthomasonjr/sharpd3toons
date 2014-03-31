@@ -110,6 +110,18 @@ class RouteController
       'description' => 'The provided hero does not exist.'
     ));
   }
+
+  public function handleError(\Exception $e, $code)
+  {
+    $message = ($code == '404')
+    ? 'Page not found.'
+    : 'What error is this? I don\'t know, my programmer hasn\'t coded error handling yet!' ;
+
+    return $this->twig->render('error.twig', array(
+      'error' => 'Error '.$code,
+      'description' => $message
+    ));
+  }
 }
 
 ?>

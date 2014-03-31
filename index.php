@@ -21,8 +21,13 @@ $app['routes.controller'] = $app->share(function() use ($app) {
 });
 
 $app->get('/', 'routes.controller:index');
-$app->get('/{account}/', 'routes.controller:account');
-$app->get('/{account}/{hero}/', 'routes.controller:hero');
+$app->get('/{account}/', 'routes.controller:account')
+	->assert('account', '\w{3,12}-\d{4}');
+$app->get('/{account}/{hero}/', 'routes.controller:hero')
+	->assert('account', '\w{3,12}-\d{4}')
+	->assert('hero', '\d{1,9}');
+
+$app->error('routes.controller:handleError');
 
 $app->run();
 
