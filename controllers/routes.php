@@ -113,9 +113,13 @@ class RouteController
 
   public function handleError(\Exception $e, $code)
   {
-    $message = ($code == '404')
-    ? 'Page not found.'
-    : 'What error is this? I don\'t know, my programmer hasn\'t coded error handling yet!' ;
+    switch ($code) {
+      case 404:
+        $message = "The requested page could not be found!";
+        break;
+      default:
+        $message = "Something went wrong!";
+    }
 
     return $this->twig->render('error.twig', array(
       'error' => 'Error '.$code,
