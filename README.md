@@ -1,3 +1,3 @@
 #sharpd3toons
 
-##D3 Character list to refamiliarize with and test PHP and D3 API
+##D3 Character list to test D3 API
