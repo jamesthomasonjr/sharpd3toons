@@ -31,13 +31,17 @@ class RouteController
 
 	public function index()
 	{
+		// Show my accout by default
 		return $this->account('sharp-1324');
 	}
 
 	public function account($account)
 	{
+		// Grab account data
 		$information = $this->grabAccountInformation($account);
 
+		// If account exists, show account page
+		// Otherwise, show an error page
 		return ($this->validateAccount($information))
 		? $this->displayAccount($information)
 		: $this->displayInvalidAccount() ;
@@ -54,6 +58,7 @@ class RouteController
 	{
 		$client = new GuzzleHttp\Client();
 
+		// Grab Account profile
 		$response = $client->get('http://us.battle.net/api/d3/profile/'.$account.'/');
 		return $response;
 	}
@@ -62,6 +67,7 @@ class RouteController
 	{
 		$profile = $information->json();
 
+		// Render the account information page
 		return $this->twig->render('account.twig', array(
 			'profile' => $profile
 		));
@@ -69,6 +75,7 @@ class RouteController
 
 	public function displayInvalidAccount()
 	{
+		// Render an error page
 		return $this->twig->render('error.twig', array(
 			'error' => 'Invalid Account',
 			'description' => "The provided account does not exist."
