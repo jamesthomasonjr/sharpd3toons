@@ -13,7 +13,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 $app->register(new Silex\Provider\ServiceControllerServiceProvider());
 
 $app['routes.controller'] = $app->share(function() use ($app) {
-	return new RouteController($app['request'], $app['twig']);
+	return new RouteController($app['request'], $app['twig'], new GuzzleHttp\Client());
 });
 
 $app->get('/', 'routes.controller:index');

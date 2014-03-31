@@ -1,15 +1,18 @@
 <?
 use Symfony\Component\HttpFoundation\Request;
+use GuzzleHttp\Client;
 
 class RouteController
 {
   protected $request;
   protected $twig;
+  protected $client;
 
-  public function __construct(Request $request,Twig_Environment $twig)
+  public function __construct(Request $request,Twig_Environment $twig, Client $client)
   {
     $this->request = $request;
     $this->twig = $twig;
+    $this->client = $client;
   }
 
   public function index()
@@ -39,10 +42,8 @@ class RouteController
 
   public function grabAccountInformation($account)
   {
-    $client = new GuzzleHttp\Client();
-
     // Grab Account profile
-    $response = $client->get('http://us.battle.net/api/d3/profile/'.$account.'/');
+    $response = $this->client->get('http://us.battle.net/api/d3/profile/'.$account.'/');
     return $response;
   }
 
