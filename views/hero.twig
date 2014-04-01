@@ -1,6 +1,9 @@
 {% extends "page.twig" %}
 
 {% block title %}{{ profile.name }}{% endblock %}
+{% block head %}
+	<script type="text/javascript">hero = {{ profile|json_encode()|raw }}</script>
+{% endblock %}
 {% block content %}
     <h1>{{ profile.name }}</h1>
     <h2>{{ profile.id }}</h2>
