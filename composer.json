@@ -3,5 +3,11 @@
 		"silex/silex": "~1.1",
 		"twig/twig": ">=1.8,<2.0-dev",
 		"guzzlehttp/guzzle": "~4.0"
+	},
+	"extra": {
+		"heroku": {
+			"framework": "silex",
+			"index-document": "index.php"
+		}
 	}
 }
