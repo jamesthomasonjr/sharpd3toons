@@ -32,5 +32,3 @@ $app->get('/assets/{asset}', 'routes.controller:asset')
 $app->error('routes.controller:handleError');
 
 $app->run();
-
-?>

@@ -1,4 +1,4 @@
-<?
+<?php
 use Symfony\Component\HttpFoundation\Request;
 use GuzzleHttp\Client;
 
@@ -135,5 +135,3 @@ class RouteController
     ));
   }
 }
-
-?>
