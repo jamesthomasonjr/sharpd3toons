@@ -6,9 +6,9 @@
 {% endblock %}
 {% block content %}
     <h1>{{ profile.battleTag }}</h1>
-    <p>
+    <ul>
       {% for hero in profile.heroes %}
-        <a href="{{ hero.id }}">{{ hero.name }}</a> [{{ hero.level }}]<br>
+      	{% include 'includes/hero.twig' %}
       {% endfor %}
-    </p>
+    </ul>
 {% endblock %}
